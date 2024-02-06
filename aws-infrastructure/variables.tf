@@ -7,3 +7,9 @@ variable "project_name" {
   description = "Project name to use in resources names"
   default     = "django-file-manager"
 }
+
+variable "availability_zones" {
+  description = "Availability zones"
+  default     = ["us-east-2a", "us-east-2c"]
+}
+
