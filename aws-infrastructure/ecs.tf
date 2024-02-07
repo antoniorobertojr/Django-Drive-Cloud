@@ -31,6 +31,7 @@ resource "aws_ecs_task_definition" "prod_backend_web" {
 }
 
 resource "aws_ecs_service" "prod_backend_web" {
+  enable_execute_command             = true
   name                               = "prod-backend-web"
   cluster                            = aws_ecs_cluster.prod.id
   task_definition                    = aws_ecs_task_definition.prod_backend_web.arn
@@ -76,7 +77,24 @@ resource "aws_security_group" "prod_ecs_backend" {
 # IAM roles and policies
 resource "aws_iam_role" "prod_backend_task" {
   name = "prod-backend-task"
-
+  inline_policy {
+    name = "prod-backend-task-ssmmessages"
+    policy = jsonencode({
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Action = [
+            "ssmmessages:CreateControlChannel",
+            "ssmmessages:CreateDataChannel",
+            "ssmmessages:OpenControlChannel",
+            "ssmmessages:OpenDataChannel",
+          ]
+          Effect   = "Allow"
+          Resource = "*"
+        },
+      ]
+    })
+  }
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
