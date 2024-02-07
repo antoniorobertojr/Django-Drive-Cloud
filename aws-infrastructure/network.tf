@@ -78,7 +78,7 @@ resource "aws_route" "prod_internet_gateway" {
 
 # NAT gateway
 resource "aws_eip" "prod_nat_gateway" {
-  vpc                       = true
+  domain                    = "vpc"
   associate_with_private_ip = "10.0.0.5"
   depends_on                = [aws_internet_gateway.prod]
 }
