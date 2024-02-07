@@ -20,3 +20,5 @@ RUN pip install -r /requirements.txt
 WORKDIR /app
 COPY . /app
 
+RUN ./manage.py collectstatic --noinput
+
