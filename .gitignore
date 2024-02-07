@@ -164,8 +164,8 @@ cython_debug/
 # .tfstate files
 *.tfstate
 *.tfstate.*
-aws_infrastructure/*.tfstate
-aws_infrastructure/*.tfstate.*
+aws-infrastructure/*.tfstate
+aws-infrastructure/*.tfstate.*
 # Crash log files
 crash.log
 crash.*.log
