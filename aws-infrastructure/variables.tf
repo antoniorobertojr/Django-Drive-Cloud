@@ -13,3 +13,8 @@ variable "availability_zones" {
   default     = ["us-east-2a", "us-east-2c"]
 }
 
+variable "ecs_prod_backend_retention_days" {
+  description = "Retention period for backend logs"
+  default     = 30
+}
+
