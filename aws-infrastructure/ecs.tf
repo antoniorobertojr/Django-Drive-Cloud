@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "prod_backend_web" {
       region     = var.region
       name       = "prod-backend-web"
       image      = aws_ecr_repository.backend.repository_url
-      command    = ["gunicorn", "-w", "3", "-b", ":8000", "django_aws.wsgi:application"]
+      command    = ["gunicorn", "-w", "3", "-b", ":8000", "core.wsgi:application"]
       log_group  = aws_cloudwatch_log_group.prod_backend.name
       log_stream = aws_cloudwatch_log_stream.prod_backend_web.name
     },
