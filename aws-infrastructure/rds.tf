@@ -10,7 +10,7 @@ resource "aws_db_instance" "prod" {
   password                = var.prod_rds_password
   port                    = "5432"
   engine                  = "postgres"
-  engine_version          = "14.2"
+  engine_version          = "14.10"
   instance_class          = var.prod_rds_instance_class
   allocated_storage       = "20"
   storage_encrypted       = false
@@ -25,8 +25,8 @@ resource "aws_db_instance" "prod" {
 
 # RDS Security Group (traffic ECS -> RDS)
 resource "aws_security_group" "rds_prod" {
-  name        = "rds-prod"
-  vpc_id      = aws_vpc.prod.id
+  name   = "rds-prod"
+  vpc_id = aws_vpc.prod.id
 
   ingress {
     protocol        = "tcp"

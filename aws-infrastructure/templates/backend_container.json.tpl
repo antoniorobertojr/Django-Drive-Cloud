@@ -19,7 +19,13 @@
         "awslogs-region": "${region}",
         "awslogs-stream-prefix": "${log_stream}"
       }
-    }
+    },
+    "environment": [
+      {
+        "name": "DATABASE_URL",
+        "value": "postgresql://${rds_username}:${rds_password}@${rds_hostname}:5432/${rds_db_name}"
+      }
+    ],
   }
 ]
 
