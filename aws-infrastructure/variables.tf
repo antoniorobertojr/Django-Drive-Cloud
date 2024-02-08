@@ -37,3 +37,11 @@ variable "prod_rds_instance_class" {
   description = "RDS instance type"
   default     = "db.t4g.micro"
 }
+
+# s3
+
+variable "prod_media_bucket" {
+  description = "S3 Bucket for production media files"
+  default     = "prod-media-asasdf123df34d1sadfjlk1"
+}
+
