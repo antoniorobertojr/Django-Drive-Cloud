@@ -1,3 +1,11 @@
+locals {
+  container_vars = {
+    s3_media_bucket = var.prod_media_bucket
+    s3_access_key   = aws_iam_access_key.prod_media_bucket.id
+    s3_secret_key   = aws_iam_access_key.prod_media_bucket.secret
+  }
+}
+
 # Production cluster
 resource "aws_ecs_cluster" "prod" {
   name = "prod"
@@ -13,18 +21,21 @@ resource "aws_ecs_task_definition" "prod_backend_web" {
   family = "backend-web"
   container_definitions = templatefile(
     "templates/backend_container.json.tpl",
-    {
-      region       = var.region
-      name         = "prod-backend-web"
-      image        = aws_ecr_repository.backend.repository_url
-      command      = ["gunicorn", "-w", "3", "-b", ":8000", "core.wsgi:application"]
-      log_group    = aws_cloudwatch_log_group.prod_backend.name
-      log_stream   = aws_cloudwatch_log_stream.prod_backend_web.name
-      rds_db_name  = var.prod_rds_db_name
-      rds_username = var.prod_rds_username
-      rds_password = var.prod_rds_password
-      rds_hostname = aws_db_instance.prod.address
-    }
+    merge(
+      local.container_vars,
+      {
+        region       = var.region
+        name         = "prod-backend-web"
+        image        = aws_ecr_repository.backend.repository_url
+        command      = ["gunicorn", "-w", "3", "-b", ":8000", "core.wsgi:application"]
+        log_group    = aws_cloudwatch_log_group.prod_backend.name
+        log_stream   = aws_cloudwatch_log_stream.prod_backend_web.name
+        rds_db_name  = var.prod_rds_db_name
+        rds_username = var.prod_rds_username
+        rds_password = var.prod_rds_password
+        rds_hostname = aws_db_instance.prod.address
+      }
+    )
   )
   execution_role_arn = aws_iam_role.ecs_task_execution.arn
   task_role_arn      = aws_iam_role.prod_backend_task.arn
