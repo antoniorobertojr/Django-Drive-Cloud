@@ -198,4 +198,4 @@ terraform.rc
 .DS_Store
 
 tutorial
-
+aws-infrastructure/terraform.tfstate
