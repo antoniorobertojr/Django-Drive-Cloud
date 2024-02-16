@@ -5,5 +5,4 @@ from photos.models import Photo
 
 @admin.register(Photo)
 class PhotosAdmin(admin.ModelAdmin):
-    list_display = ['title']
-
+    list_display = ["title"]

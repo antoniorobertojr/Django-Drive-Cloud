@@ -129,7 +129,7 @@ class UnshareModelMixin:
 
 
 class SharedWithMeMixin:
-    @action(detail=False, methods=['get'], url_path='shared-with-me')
+    @action(detail=False, methods=["get"], url_path="shared-with-me")
     def shared_with_me(self, request, *args, **kwargs):
         model = self.queryset.model
         model_content_type = ContentType.objects.get_for_model(model)
@@ -165,20 +165,22 @@ class FileDownloadMixin:
 
         try:
             s3_client = boto3.client(
-                's3',
+                "s3",
                 aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
                 aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-                region_name=settings.AWS_S3_REGION_NAME
+                region_name=settings.AWS_S3_REGION_NAME,
             )
 
             s3_response = s3_client.get_object(Bucket=bucket_name, Key=file_path)
             response = HttpResponse(
-                s3_response['Body'],
-                content_type=s3_response.get('ContentType', 'application/octet-stream')
+                s3_response["Body"],
+                content_type=s3_response.get("ContentType", "application/octet-stream"),
             )
-            response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
+            response[
+                "Content-Disposition"
+            ] = f'attachment; filename="{os.path.basename(file_path)}"'
 
             return response
 
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": str(e)}, status=status.HTTP_404_NOT_FOUND)

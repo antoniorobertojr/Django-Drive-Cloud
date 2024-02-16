@@ -1,7 +1,13 @@
 from django.contrib.auth.models import AnonymousUser
 from django.test import RequestFactory, TestCase
-from file_manager.permissions import (CanDelete, CanEdit, CanEditParentFolder,
-                                      CanRead, CanShare, IsOwner)
+from file_manager.permissions import (
+    CanDelete,
+    CanEdit,
+    CanEditParentFolder,
+    CanRead,
+    CanShare,
+    IsOwner,
+)
 from rest_framework.views import APIView
 
 from .config import FileMixin, FolderMixin, ShareMixin, UserMixin

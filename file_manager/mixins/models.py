@@ -11,9 +11,13 @@ class UniqueNameMixin:
 
         model = self.__class__
         if isinstance(self, File):
-            query = model.objects.filter(name=self.name, owner=self.owner, folder=self.folder)
-        else: # Folder
-            query = model.objects.filter(name=self.name, owner=self.owner, parent=self.parent)
+            query = model.objects.filter(
+                name=self.name, owner=self.owner, folder=self.folder
+            )
+        else:  # Folder
+            query = model.objects.filter(
+                name=self.name, owner=self.owner, parent=self.parent
+            )
         if hasattr(self, "parent"):
             query = query.filter(parent=self.parent)
 

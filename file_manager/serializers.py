@@ -19,16 +19,17 @@ class FileSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         # Handle file creation
-        if 'name' not in validated_data or not validated_data['name']:
-            validated_data['name'] = validated_data['file'].name
+        if "name" not in validated_data or not validated_data["name"]:
+            validated_data["name"] = validated_data["file"].name
         return File.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         # Handle file updating
-        instance.name = validated_data.get('name', instance.name)
+        instance.name = validated_data.get("name", instance.name)
         # Add other fields that need to be updated here
         instance.save()
         return instance
+
 
 class FolderSerializer(serializers.ModelSerializer):
     children = serializers.SerializerMethodField()

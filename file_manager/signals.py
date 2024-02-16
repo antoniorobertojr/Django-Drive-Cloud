@@ -45,6 +45,7 @@ def copy_parent_folder_permissions_to_subfolder(sender, instance, created, **kwa
             folder_content_type, instance.parent.id, folder_content_type, instance.id
         )
 
+
 @receiver(post_save, sender=Share)
 def propagate_share_changes(sender, instance, created, **kwargs):
     # Get the related object from the Share instance
@@ -56,33 +57,41 @@ def propagate_share_changes(sender, instance, created, **kwargs):
         file_content_type = ContentType.objects.get_for_model(File)
 
         # Propagate the permission changes to subfolders and files recursively
-        propagate_permissions_recursively(related_object, folder_content_type, file_content_type, instance)
+        propagate_permissions_recursively(
+            related_object, folder_content_type, file_content_type, instance
+        )
 
-def propagate_permissions_recursively(folder, folder_content_type, file_content_type, share_instance):
+
+def propagate_permissions_recursively(
+    folder, folder_content_type, file_content_type, share_instance
+):
     # Update permissions for each subfolder
     for subfolder in folder.children.all():
         copy_or_update_share(subfolder, folder_content_type, share_instance)
 
         # Recursively call for nested subfolders and their files
-        propagate_permissions_recursively(subfolder, folder_content_type, file_content_type, share_instance)
+        propagate_permissions_recursively(
+            subfolder, folder_content_type, file_content_type, share_instance
+        )
 
     # Update permissions for each file in the current folder
     for file in folder.file_set.all():
         copy_or_update_share(file, file_content_type, share_instance)
 
+
 def copy_or_update_share(obj, content_type, share_instance):
     # Check if a share for the object and the shared_with user already exists
     obj_share, created = Share.objects.get_or_create(
-        content_type=content_type, 
-        object_id=obj.id, 
+        content_type=content_type,
+        object_id=obj.id,
         shared_with=share_instance.shared_with,
         defaults={
-            'shared_by': share_instance.shared_by,
-            'can_read': share_instance.can_read,
-            'can_edit': share_instance.can_edit,
-            'can_delete': share_instance.can_delete,
-            'can_share': share_instance.can_share,
-        }
+            "shared_by": share_instance.shared_by,
+            "can_read": share_instance.can_read,
+            "can_edit": share_instance.can_edit,
+            "can_delete": share_instance.can_delete,
+            "can_share": share_instance.can_share,
+        },
     )
     if not created:
         # Update the object share permissions if it already exists

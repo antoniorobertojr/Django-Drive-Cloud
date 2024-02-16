@@ -44,9 +44,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # 3rd party
-    'rest_framework',
-    'rest_framework.authtoken',
-    'drf_spectacular',
+    "rest_framework",
+    "rest_framework.authtoken",
+    "drf_spectacular",
     # my apps
     "photos",
     "file_manager",
@@ -89,7 +89,9 @@ WSGI_APPLICATION = "core.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db(default="postgresql://postgres:postgres@127.0.0.1:5432/django_aws")
+    "default": env.db(
+        default="postgresql://postgres:postgres@127.0.0.1:5432/django_aws"
+    )
 }
 
 
@@ -127,7 +129,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 
 # Default primary key field type
@@ -142,7 +144,7 @@ DEFAULT_FILE_STORAGE = env(
     "DEFAULT_FILE_STORAGE", default="django.core.files.storage.FileSystemStorage"
 )
 
-AWS_LOCATION = '' 
+AWS_LOCATION = ""
 AWS_QUERYSTRING_AUTH = True
 AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID", default="")
 AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY", default="")
