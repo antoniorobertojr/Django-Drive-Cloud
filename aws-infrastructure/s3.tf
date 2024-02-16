@@ -63,37 +63,3 @@ resource "aws_s3_bucket_public_access_block" "prod_media_public_access_block" {
   ignore_public_acls      = true
   restrict_public_buckets = true
 }
-
-resource "aws_s3_bucket_policy" "prod_media_bucket" {
-  bucket = aws_s3_bucket.prod_media.id
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Principal = "*"
-        Action = [
-          "s3:*",
-        ]
-        Effect = "Allow"
-        Resource = [
-          "arn:aws:s3:::${var.prod_media_bucket}",
-          "arn:aws:s3:::${var.prod_media_bucket}/*"
-        ]
-      },
-      {
-        Sid       = "PublicReadGetObject"
-        Principal = "*"
-        Action = [
-          "s3:GetObject",
-        ]
-        Effect = "Allow"
-        Resource = [
-          "arn:aws:s3:::${var.prod_media_bucket}",
-          "arn:aws:s3:::${var.prod_media_bucket}/*"
-        ]
-      },
-    ]
-  })
-
-  depends_on = [aws_s3_bucket_public_access_block.prod_media_public_access_block]
-}
