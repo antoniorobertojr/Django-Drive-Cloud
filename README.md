@@ -37,12 +37,12 @@ Ensure you have Terraform installed on your machine.
 
 Clone the project repository:
 ```
-git clone https://yourrepositoryurl.com/django-drive-cloud.git
+git clone https://github.com/juniormach96/Django-Drive-Cloud.git .
 ```
 
 Navigate to the Terraform configuration directory:
 ```
-cd django-drive-cloud/aws-infrastructure
+cd aws-infrastructure
 ```
 
 Initialize the Terraform environment:
