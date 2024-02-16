@@ -11,8 +11,8 @@ from file_manager.mixins.views import (
     UnshareModelMixin,
 )
 
-from .models import File, Folder, Share
-from .permissions import (
+from file_manager.models import File, Folder, Share
+from file_manager.permissions import (
     CanDelete,
     CanEdit,
     CanEditParentFolder,
@@ -20,7 +20,7 @@ from .permissions import (
     CanShare,
     IsOwner,
 )
-from .serializers import (
+from file_manager.serializers import (
     FileSerializer,
     FolderSerializer,
     ShareSerializer,
