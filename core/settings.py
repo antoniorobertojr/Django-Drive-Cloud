@@ -45,11 +45,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 3rd party
     'rest_framework',
+    'rest_framework.authtoken',
     'drf_spectacular',
     # my apps
     "photos",
-    "custom_auth",
     "file_manager",
+    "custom_auth",
 ]
 
 MIDDLEWARE = [
@@ -88,7 +89,7 @@ WSGI_APPLICATION = "core.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db(default="postgresql://postgres:postgres@127.0.0.1:5433/django_aws")
+    'default': env.db(default="postgresql://postgres:postgres@127.0.0.1:5432/django_aws")
 }
 
 
