@@ -12,6 +12,8 @@ from file_manager.permissions import CanEditParentFolder, CanShare, IsOwner
 from rest_framework import mixins, serializers, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.http import HttpResponse
+
 
 User = get_user_model()
 
