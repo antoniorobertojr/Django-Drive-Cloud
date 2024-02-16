@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "drf_spectacular",
     # my apps
-    "photos",
     "file_manager",
     "custom_auth",
 ]
