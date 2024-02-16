@@ -21,4 +21,3 @@ WORKDIR /app
 COPY . /app
 
 RUN ./manage.py collectstatic --noinput
-
