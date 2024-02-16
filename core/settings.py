@@ -47,7 +47,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_spectacular',
     # my apps
-    "photos"
+    "photos",
+    "custom_auth",
+    "file_manager",
 ]
 
 MIDDLEWARE = [
@@ -149,7 +151,14 @@ AWS_S3_ENDPOINT_URL = env("AWS_S3_ENDPOINT_URL", default="")
 AWS_S3_FILE_OVERWRITE = False
 
 
-
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Django Drive Cloud",
+    "DESCRIPTION": "Store and Share Files and Folders",
 }
