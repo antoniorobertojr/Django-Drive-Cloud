@@ -54,7 +54,7 @@ class Share(models.Model):
 class File(models.Model, UniqueNameMixin):
     name = models.CharField(max_length=128)
     folder = models.ForeignKey(Folder, on_delete=models.CASCADE, null=True, blank=True)
-    file = models.FileField(upload_to='files/')
+    file = models.FileField()
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="owned_files"
     )

@@ -1,4 +1,5 @@
 import os
+import boto3
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -150,16 +151,32 @@ class PersonalMixin:
 
 class FileDownloadMixin:
     @action(detail=True, methods=["get"])
-    def download(self, pk):
+    def download(self, request, pk):
         try:
             file_instance = self.get_queryset().get(pk=pk)
-        except File.DoesNotExist:
+        except self.get_queryset().model.DoesNotExist:
             raise Http404("File does not exist")
 
-        file_path = os.path.join(settings.MEDIA_ROOT, file_instance.file.name)
-        if not os.path.exists(file_path):
-            raise Http404("File does not exist on the server")
+        file_name = file_instance.file.name
+        bucket_name = settings.AWS_STORAGE_BUCKET_NAME
+        file_path = f"{bucket_name}/{file_name}"
 
-        return FileResponse(
-            open(file_path, "rb"), as_attachment=True, filename=file_instance.name
-        )
+        try:
+            s3_client = boto3.client(
+                's3',
+                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+                region_name=settings.AWS_S3_REGION_NAME
+            )
+
+            s3_response = s3_client.get_object(Bucket=bucket_name, Key=file_path)
+            response = HttpResponse(
+                s3_response['Body'],
+                content_type=s3_response.get('ContentType', 'application/octet-stream')
+            )
+            response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
+
+            return response
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_404_NOT_FOUND)
