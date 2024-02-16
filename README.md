@@ -11,6 +11,7 @@ django-drive-cloud is a Django-based cloud storage solution similar to Google Dr
 - [Infrastructure](#infrastructure)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Improvements](#improvements)
 
 
 ## Features
@@ -112,3 +113,15 @@ python3 manage.py createsuperuser
 ### Usage
 
 After successfully installing and setting up `django-drive-cloud`, open a web browser and navigate to the Load Balancer's URL provided by the Terraform output during the installation process. Then, access the `api/docs` documentation to see the available endpoints.
+
+### Improvements
+
+**Stream Files Instead of Uploading to Memory**: To reduce memory usage and improve performance, especially for large files. This allows data to be processed incrementally, reducing the load on the server.
+
+**Add Continuous Integration/Continuous Deployment (CI/CD)**
+
+**User-specific Folders for File Organization**: To reduce the number of calls made to access files within the same key in the storage system.
+
+**Automate Database Migrations**: Create another task definition with a command to apply the migrations
+
+**Folder Download via Zip File**: Provide an option for users to download an entire folder as a zip file.
