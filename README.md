@@ -110,11 +110,11 @@ python3 manage.py createsuperuser
 ```
 
 
-### Usage
+## Usage
 
 After successfully installing and setting up `django-drive-cloud`, open a web browser and navigate to the Load Balancer's URL provided by the Terraform output during the installation process. Then, access the `api/docs` documentation to see the available endpoints.
 
-### Improvements
+## Improvements
 
 **Stream Files Instead of Uploading to Memory**: To reduce memory usage and improve performance, especially for large files. This allows data to be processed incrementally, reducing the load on the server.
 
